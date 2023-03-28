@@ -1,0 +1,37 @@
+<div
+  [ngClass]="{'vj-input-component': true, 'invalid-state': ((invalid || noResultsFound) && interacted), 'disabled-state': isDisabled}">
+  <div *ngIf="label?.length" [ngClass]="{'vj-input-label': true, 'waiving-invisible': waiving}">
+    <label [for]="label">
+      <span>{{label}}</span>
+      <span class="required-label" *ngIf="requiredLabel?.length">{{requiredLabel}}</span>
+    </label>
+  </div>
+  <div class="input-container">
+    <div *ngIf="waiving" class="waiving"></div>
+    <div style="width: 100%;">
+      <ng-content></ng-content>
+    </div>
+    <button *ngIf="value?.length" class="close-autocomplete" (click)="reset();markAsDirty();focusCursor()">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div *ngIf="isFocused" class="input-autocomplete">
+    <div class="arrow"></div>
+    <div class="input-autocomplete-loading" *ngIf="isLoading">Loading...</div>
+    <div *ngIf="!isLoading" class="input-autocomplete-list">
+      <div class="input-autocomplete-item" *ngFor="let item of filteredList"
+        [ngClass]="{'input-autocomplete-item-disabled': item.disabled}" (mousedown)="onClickAutocompleteItem(item)">
+        {{item.label}}</div>
+    </div>
+  </div>
+  <div *ngIf="!noResultsFound" [ngClass]="{'input-hint': true, 'waiving-invisible': waiving}">
+    <span>{{hint}}</span>
+  </div>
+  <div *ngIf="(invalid && interacted && !noResultsFound)"
+    [ngClass]="{'input-error': true, 'waiving-invisible': waiving}">
+    <span>{{errors}}</span>
+  </div>
+  <div *ngIf="noResultsFound" [ngClass]="{'input-error': true, 'waiving-invisible': waiving}">
+    <span>{{validator.noResultsFound}}</span>
+  </div>
+</div>

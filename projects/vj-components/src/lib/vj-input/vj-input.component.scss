@@ -1,0 +1,239 @@
+@import "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0";
+@import "../theme/vj-theme.scss";
+
+$input-height: 2rem;
+$input-background-color: white;
+$waive-in-color: #eeeeee;
+$waive-out-color: #dddddd;
+$error-color: red;
+$required-label-color: red;
+$disabled-color: #eeeeee;
+
+$font-color: rgba(0, 0, 0, 0.5);
+$input-border-size: 1px;
+$input-border-color: rgba(0, 0, 0, 0.2);
+$input-border-focused-color: rgba(0, 0, 0, 0.5);
+$input-hint-error-heigth: 1rem;
+
+$label-size: 90%;
+$label-height: 0rem;
+
+$input-autocomplete-height: 2rem;
+
+* {
+  box-sizing: border-box;
+}
+.vj-input-component {
+  position: relative;
+  .vj-input-label {
+    width: 100%;
+    position: relative;
+    label {
+      width: $label-size;
+      height: $label-height;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: unset;
+      margin: unset;
+      color: $font-color;
+      font-size: small;
+      .required-label {
+        color: $required-label-color;
+      }
+    }
+  }
+  .input-container {
+    padding: $padding;
+    border: $input-border-size solid $input-border-color;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    position: relative;
+    background-color: $input-background-color;
+    transition: all ease-in-out 0.3s;
+    ::ng-deep {
+      input,
+      select {
+        width: 100%;
+        height: $input-height;
+        padding: unset;
+        border: unset;
+        color: $font-color;
+        background-color: transparent;
+        &::placeholder {
+          color: rgba(0, 0, 0, 0.4);
+        }
+      }
+      input:focus,
+      select:focus {
+        border: unset;
+        outline: unset;
+      }
+    }
+    &:focus-within {
+      transition: all ease-in-out 0.1s;
+      border: $input-border-size solid $input-border-focused-color;
+    }
+    .close-autocomplete {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 50%;
+      background-color: transparent;
+      transition: all ease-in-out 0.2s;
+      border: unset;
+      .material-symbols-outlined {
+        font-size: smaller !important;
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        transition: all ease-in-out 0.2s;
+      }
+      &:active {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+    .waiving {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: waiving alternate-reverse infinite 1s;
+      border-radius: $border-radius;
+    }
+  }
+  .input-hint {
+    width: 100%;
+    min-height: $input-hint-error-heigth;
+    font-size: small;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    animation: bottom-to-top ease-in-out 0.2s;
+    color: $font-color;
+  }
+  .input-autocomplete {
+    width: 100%;
+    min-height: $input-autocomplete-height;
+    background-color: white;
+    position: absolute;
+    left: 0;
+    top: calc($input-height + ($padding * 2) + ($input-hint-error-heigth * 3));
+    border-radius: $border-radius;
+    border: $input-border-size solid $input-border-color;
+    animation: bottom-to-top ease-in-out 0.2s;
+    z-index: 1;
+    .arrow {
+      width: 1rem;
+      height: 1rem;
+      background-color: white;
+      border: $input-border-size solid $input-border-color;
+      border-bottom: unset;
+      border-right: unset;
+      position: absolute;
+      top: -0.57rem;
+      margin-left: calc(50% - 1rem);
+      transform: rotate(45deg);
+    }
+    .input-autocomplete-loading {
+      height: 50px;
+      padding: $padding;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .input-autocomplete-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      .input-autocomplete-item {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: $padding;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+        z-index: 1;
+        cursor: pointer;
+      }
+      .input-autocomplete-item-disabled {
+        background-color: rgba(0, 0, 0, 0.08);
+        color: gray;
+        pointer-events: none;
+        cursor: default;
+      }
+    }
+  }
+  .waiving-invisible {
+    visibility: hidden;
+  }
+}
+.invalid-state {
+  .vj-input-label {
+    label {
+      color: $error-color;
+    }
+  }
+  .input-container {
+    border: $input-border-size solid $error-color;
+    ::ng-deep {
+      input,
+      select {
+        color: $error-color;
+      }
+    }
+    &:focus-within {
+      border: $input-border-size solid $error-color;
+    }
+    .close-autocomplete {
+      color: $error-color;
+    }
+  }
+  .input-hint {
+    display: none;
+  }
+  .input-error {
+    width: 100%;
+    min-height: $input-hint-error-heigth;
+    font-size: small;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: $error-color;
+    animation: bottom-to-top ease-in-out 0.2s;
+  }
+}
+.disabled-state {
+  .input-container {
+    background-color: $disabled-color;
+  }
+}
+@keyframes bottom-to-top {
+  0% {
+    opacity: 0;
+    transform: translateY(25%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes waiving {
+  0% {
+    background-color: $waive-in-color;
+  }
+  100% {
+    background-color: $waive-out-color;
+  }
+}
