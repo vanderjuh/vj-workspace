@@ -1,4 +1,4 @@
-# vj-Workspace
+# vj-workspace
 
 Welcome to my Angular Workspace, a place where I create and share amazing components, services, directives and more with the community.
 
