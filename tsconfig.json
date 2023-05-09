@@ -26,6 +26,9 @@
     "paths": {
       "vj-components": [
         "dist/vj-components"
+      ],
+      "vj-form-utils": [
+        "dist/vj-form-utils"
       ]
     }
   },
